@@ -1,0 +1,29 @@
+{
+  "name": "instagram-trends",
+  "version": "1.0.0",
+  "description": "My first experiment with Node.js, Express.js and React.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sim1hill/instagram-trends.git"
+  },
+  "keywords": [
+    "javascript",
+    "react",
+    "node",
+    "express"
+  ],
+  "author": "Simone Hill",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sim1hill/instagram-trends/issues"
+  },
+  "homepage": "https://github.com/sim1hill/instagram-trends#readme",
+  "dependencies": {
+    "express": "^4.13.1"
+  }
+}
