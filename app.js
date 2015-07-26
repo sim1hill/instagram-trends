@@ -4,10 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var fs = require('fs');
 var routes = require('./routes/index');
 var instagram = require('./routes/instagram');
 var instagramAPI = require('./instagramAPI')
+var requestify = require('requestify'); 
 
 var app = express();
 
@@ -44,10 +45,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.post('/instagram', function (req, res) {
-  instagramAPI.apiRequest(req.body.hashtag);
-  res.send(req.body.hashtag);
+  var linkArray = [];
+  requestify.get("https://api.instagram.com/v1/tags/" + req.body.hashtag + "/media/recent?client_id=ADDCLIENTID&max_tag_id=10343103678223315303").then(function(response){
+    var parsedResponse = response.getBody().data;
+    parsedResponse.forEach(function(photo){
+      linkArray.push(photo.link + "media");
+    });
+    res.send(linkArray);
+  });
 });
 
+app.get('/test.json', function(req, res) {
+  instagramAPI.apiRequest
+  fs.readFile('test.json', function(err, data) {
+    res.setHeader('Cache-Control', 'no-cache');
+    res.json(JSON.parse(data));
+  });
+});
 
 
 app.use('/', routes);
