@@ -25,20 +25,24 @@ var ImageBox = React.createClass({
       
     handleHashtagSubmit: function(hashtag) {
         var photos = this.state.data;
+        // var newPhotos = photos.concat([{"embed": "https://instagram.com/p/4xHNOlTZEM/media"}])
+        // this.setState({data: newPhotos})
         // var newPhoto = photos.concat([hashtag]);
         // this.setState({data: newPhoto});
-        // debugger;
+        var arrayWithHashes = [];
         $.ajax({
           url: this.props.url,
           // dataType: 'json',
           type: 'POST',
           data: hashtag,
-          success: function(data, res, test) {
-            debugger;
-            // this.setState({data: data});
+          success: function(responseData) {
+              // this.setState({data: responseData})
+            responseData.forEach(function(photo){
+              newPhotos = photos.concat([{"embed": photo}]);
+            });
+            this.setState({data: newPhotos});
           }.bind(this),
           error: function(xhr, status, err) {
-            // debugger;
             console.error(this.props.url, status, err.toString());
           }.bind(this)
 
@@ -111,7 +115,7 @@ var ImageForm = React.createClass({
 });
 
     React.render(
-      <ImageBox url="/instagram" pollInterval={2000} />,
+      <ImageBox url="/instagram" data="/test.json" pollInterval={2000} />,
       document.getElementById('react-content')
 
       );

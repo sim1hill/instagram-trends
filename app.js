@@ -45,12 +45,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.post('/instagram', function (req, res) {
+  // console.log("post /instagram hit")
   var linkArray = [];
   requestify.get("https://api.instagram.com/v1/tags/" + req.body.hashtag + "/media/recent?client_id=ADDCLIENTID&max_tag_id=10343103678223315303").then(function(response){
     var parsedResponse = response.getBody().data;
     parsedResponse.forEach(function(photo){
       linkArray.push(photo.link + "media");
     });
+    // console.log("linkArray successful " + linkArray.length());
     res.send(linkArray);
   });
 });
